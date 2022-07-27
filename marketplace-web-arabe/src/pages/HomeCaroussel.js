@@ -9,6 +9,9 @@ import { MdCake } from "react-icons/md";
 import { HiOutlineBadgeCheck } from "react-icons/hi";
 
 import axios from "axios";
+import { FormattedMessage } from "react-intl";
+
+const intl=JSON.parse(localStorage.getItem('intl'))
 class HomeCaroussel extends Component {
   constructor(props) {
     super();
@@ -132,7 +135,7 @@ class HomeCaroussel extends Component {
                         className=" badge badge-success py-1 w-100  "
                       >
                         <HiOutlineBadgeCheck className=" mr-1 fa-lg " />
-                        <span>Labélisé ANOC</span>{" "}
+                        <span><FormattedMessage id="panier_Labelise"/></span>{" "}
                       </h1>
                     ) : (
                       <span className="badge pt-3 w-100  mt-1  ">{"  "}</span>
@@ -171,8 +174,8 @@ class HomeCaroussel extends Component {
                             src="Images/sheep-head.png"
                             alt=""
                           />
-                          {Annonces.espece == "chevre" ? "Chèvre" : "Mouton"}
-                          <span className="float-right">
+                          {Annonces.espece == "chevre" ? <FormattedMessage id="tout_les_annonces_chevre"/> : <FormattedMessage id="tout_les_annonces_mouton"/>}
+                          <span style={localStorage.getItem('lg')=="ar"?{ float: "left"}:{float:"right"}}>
                             <FaShapes style={{ marginRight: "5px" }} />
                             {" " + Annonces.race}
                           </span>
@@ -183,19 +186,22 @@ class HomeCaroussel extends Component {
                             className=" mr-1 fa-lg "
                             style={{ marginRight: "5px" }}
                           />
+                          <FormattedMessage id="panier_mouton_age_mois"
+                          values={{ age:Annonces.age }} />
+                          {/* {Annonces.age + " mois"} */}
 
-                          {Annonces.age + " mois"}
-
-                          <span className="float-right ">
+                          <span style={localStorage.getItem('lg')=="ar"?{ float: "left"}:{float:"right"}}>
                             <GiWeight
                               className=" mr-1 fa-lg "
                               style={{ marginRight: "5px" }}
                             />
-                            {Annonces.poids + " Kg"}
+                            <FormattedMessage id="panier_mouton_poids_kg"
+                            values={{ poids:Annonces.poids }} />
+                            {/* {Annonces.poids + " Kg"} */}
                           </span>
                         </div>
                         <div>
-                          <span className="float-left ">
+                          <span style={localStorage.getItem('lg')=="ar"?{ float: "right"}:{float:"left"}}>
                             <IoMdMale
                               className=" mr-1 fa-lg "
                               style={{
@@ -208,14 +214,15 @@ class HomeCaroussel extends Component {
                           </span>
                         </div>
                         <div
-                          className="float-right "
-                          style={{
-                            color: "#fe6927",
-                            fontSize: "18px",
-                            fontWeight: "1000",
-                            textDecoration: "bold",
-                            alignContent: "center",
-                          }}
+                          style={localStorage.getItem('lg')=="ar"?{ float: "left",color: "#fe6927",
+                          fontSize: "18px",
+                          fontWeight: "1000",
+                          textDecoration: "bold",
+                          alignContent: "center",}:{float:"right",color: "#fe6927",
+                          fontSize: "18px",
+                          fontWeight: "1000",
+                          textDecoration: "bold",
+                          alignContent: "center",}}
                         >
                           <img
                             style={{ height: "30px" }}
@@ -230,7 +237,9 @@ class HomeCaroussel extends Component {
                               marginRight: "0.5rem",
                             }}
                           /> */}
-                          {Annonces.prix + "  Dhs"}
+                          <FormattedMessage id="panier_mouton_currency"
+                          values={{ prix:Annonces.prix }} />
+                          {/* {Annonces.prix + "  Dhs"} */}
                         </div>
                       </div>
                     </div>

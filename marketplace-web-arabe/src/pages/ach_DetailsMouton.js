@@ -16,6 +16,9 @@ import {
   TwitterShareButton,
   TwitterIcon,
 } from "react-share";
+import { FormattedMessage } from "react-intl";
+
+const intl=JSON.parse(localStorage.getItem('intl'))
 
 class DetailsMouton extends Component {
   constructor() {
@@ -167,7 +170,7 @@ class DetailsMouton extends Component {
         )
         .then(this.setState({ isFav: true }));
       Swal.fire({
-        title: "Ajouté avec succès dans vos Favoris",
+        title: intl.messages.details_mouton_ajoute_favoris_succes,
         icon: "success",
         width: 400,
         heightAuto: false,
@@ -203,7 +206,7 @@ class DetailsMouton extends Component {
         )
         .then(this.setState({ isInpanier: true }));
       Swal.fire({
-        title: "Ajouté dans Pannier",
+        title: intl.messages.favoris_ajoute_au_panier_succes,
         icon: "success",
         width: 400,
         heightAuto: false,
@@ -241,7 +244,7 @@ class DetailsMouton extends Component {
         )
         .then(this.setState({ isFav: false }));
       Swal.fire({
-        title: "Supprimé avec succès ",
+        title: intl.messages.details_mouton_supprimer_du_favoris_succes,
         icon: "success",
         width: 400,
         heightAuto: false,
@@ -288,7 +291,7 @@ class DetailsMouton extends Component {
             <Loader type="Oval" color="#7fad39" height="80" width="80" />
           </div>
         ) : (
-          <section className="product-details spad">
+          <section style={localStorage.getItem('lg')=='ar'?{direction:"rtl",textAlign:"right"}:{}} className="product-details spad">
             <div className="container">
               <div className="row">
                 <div className="col-lg-6 col-md-6">
@@ -425,9 +428,9 @@ class DetailsMouton extends Component {
                         </div>
                         {this.state.Espece.anoc ? (
                           <span className=" text-success ">
-                            <HiOutlineBadgeCheck className=" mr-1 fa-lg " /> Le
-                            label de l'ANOC est un gage de la qualité du
-                            produit. <br></br>
+                            <HiOutlineBadgeCheck className=" mr-1 fa-lg " />
+                            <FormattedMessage id="details_mouton_label_anoc"/>
+                            <br></br>
                           </span>
                         ) : null}
                         <br></br>
@@ -444,7 +447,7 @@ class DetailsMouton extends Component {
                               padding: "10px 0 10px 10px",
                             }}
                           >
-                            Description
+                            <FormattedMessage id="details_mouton_description_title"/>
                           </span>
                           <div id="gris">
                             {this.state.Espece.description ? (
@@ -452,7 +455,7 @@ class DetailsMouton extends Component {
                                 {this.state.Espece.description}
                               </span>
                             ) : (
-                              <span>Aucune description disponible</span>
+                              <span><FormattedMessage id="details_mouton_aucune_description"/></span>
                             )}
                           </div>
                         </div>
@@ -462,67 +465,69 @@ class DetailsMouton extends Component {
                           <div id="centrer2">
                             {/* Ajouter ici Social Sharing Button */}
                             <h4 id="centrer2">
-                              Partager l'annonce avec vos proches sur :
+                            <FormattedMessage id="details_mouton_partage_annonce"/>
                             </h4>
                             <div>
-                              <EmailShareButton
-                                url={shareUrl + "/" + this.state.Espece._id}
-                                subject="Annonce intéressante à voir (Animal à vendre)"
-                                body={
-                                  "Annonce intéressante à voir ( " +
-                                  this.state.Espece.categorie +
-                                  " " +
-                                  this.state.Espece.race +
-                                  " )"
-                                }
-                              >
-                                <EmailIcon size={36} round />
-                              </EmailShareButton>{" "}
+                            <FormattedMessage id="details_mouton_partage_par_email_body" 
+                            values={{ categorie: this.state.Espece.categorie,race:this.state.Espece.race }}
+                            >
+                          {(body) => (
+                            <EmailShareButton
+                            url={shareUrl + "/" + this.state.Espece._id}
+                            subject={intl.messages.details_mouton_partage_par_email_subject}
+                            body={body}
+                          >
+                            <EmailIcon size={36} round />
+                          </EmailShareButton>
+                          )}
+                        </FormattedMessage>{" "}
                               {/*<FacebookMessengerShareButton
                                     url="https://github.com/nygardk/react-share"
                                     appId="521270401588372"
                                   >
                                     <FacebookMessengerIcon size={36} round />
                                   </FacebookMessengerShareButton> {" "}*/}
-                              <FacebookShareButton
-                                // url= "https://youtube.com"
-                                url={shareUrl + "/" + this.state.Espece._id}
-                                quote={
-                                  "Annonce intéressante à voir ( " +
-                                  this.state.Espece.categorie +
-                                  " " +
-                                  this.state.Espece.race +
-                                  " )"
-                                }
-                              >
-                                <FacebookIcon size={36} round />
-                              </FacebookShareButton>{" "}
-                              <WhatsappShareButton
-                                // url= "https://youtube.com"
-                                url={shareUrl + "/" + this.state.Espece._id}
-                                title={
-                                  "Annonce intéressante à voir ( " +
-                                  this.state.Espece.categorie +
-                                  " " +
-                                  this.state.Espece.race +
-                                  " )"
-                                }
-                                separator=": "
-                              >
-                                <WhatsappIcon size={36} round />
-                              </WhatsappShareButton>{" "}
-                              <TwitterShareButton
-                                url={shareUrl + "/" + this.state.Espece._id}
-                                title={
-                                  "Annonce intéressante à voir ( " +
-                                  this.state.Espece.categorie +
-                                  " " +
-                                  this.state.Espece.race +
-                                  " )"
-                                }
-                              >
-                                <TwitterIcon size={36} round />
-                              </TwitterShareButton>
+                              <FormattedMessage id="details_mouton_partage_par_email_body" 
+                            values={{ categorie: this.state.Espece.categorie,race:this.state.Espece.race }}
+                            >
+                          {(quote) => (
+                            <FacebookShareButton
+                            // url= "https://youtube.com"
+                            url={shareUrl + "/" + this.state.Espece._id}
+                            quote={quote}
+                          >
+                            <FacebookIcon size={36} round />
+                          </FacebookShareButton>
+                          )}
+                        </FormattedMessage>{" "}
+
+                        <FormattedMessage id="details_mouton_partage_par_email_body" 
+                            values={{ categorie: this.state.Espece.categorie,race:this.state.Espece.race }}
+                            >
+                          {(title) => (
+                            <WhatsappShareButton
+                            // url= "https://youtube.com"
+                            url={shareUrl + "/" + this.state.Espece._id}
+                            title={title}
+                            separator=": "
+                          >
+                            <WhatsappIcon size={36} round />
+                          </WhatsappShareButton>
+                          )}
+                        </FormattedMessage>{" "}
+
+                        <FormattedMessage id="details_mouton_partage_par_email_body" 
+                            values={{ categorie: this.state.Espece.categorie,race:this.state.Espece.race }}
+                            >
+                          {(title) => (
+                            <TwitterShareButton
+                            url={shareUrl + "/" + this.state.Espece._id}
+                            title={title}
+                          >
+                            <TwitterIcon size={36} round />
+                          </TwitterShareButton>
+                          )}
+                        </FormattedMessage>
                             </div>
                           </div>
                         </div>
@@ -536,7 +541,7 @@ class DetailsMouton extends Component {
                       <b> </b>
                       <br></br>
                       <b>
-                        Annonce № :{" "}
+                        <FormattedMessage id="details_mouton_numero"/>{" "}
                         <span className="text-secondary">
                           {this.state.Espece.reference}
                         </span>{" "}
@@ -544,7 +549,7 @@ class DetailsMouton extends Component {
                       </b>
                       <br></br>
                       <b className="w-50">
-                        Nom du propriétaire (eleveur) :
+                        <FormattedMessage id="details_mouton_nom_eleveur"/>
                         <span className="text-secondary">
                           {" "}
                           {" " +
@@ -556,39 +561,46 @@ class DetailsMouton extends Component {
 
                       <ul className="pt-4">
                         <li>
-                          <b>№ Boucle</b>{" "}
+                          <b><FormattedMessage id="details_mouton_numero_boucle"/></b>{" "}
                           <span>{this.state.Espece.boucle}</span>
                         </li>
                         <li>
-                          <b>Espece</b>{" "}
+                          <b><FormattedMessage id="details_mouton_espece"/></b>{" "}
                           <span>
                             {this.state.Espece.espece == "chevre"
-                              ? "Chèvre"
-                              : "Mouton"}
+                              ? <FormattedMessage id="tout_les_annonces_chevre"/>
+                              : <FormattedMessage id="tout_les_annonces_mouton"/>}
                           </span>
                         </li>
                         {/*<li>
                           <b>Categorie</b> <span>{this.state.Espece.categorie}</span>
                         </li>*/}
                         <li>
-                          <b>Race</b> <span>{this.state.Espece.race}</span>
+                          <b><FormattedMessage id="home_item_race"/></b> <span>{this.state.Espece.race}</span>
                         </li>
                         <li>
-                          <b>Ville</b>{" "}
+                          <b><FormattedMessage id="tout_les_annonces_ville"/></b>{" "}
                           <span>{this.state.Espece.localisation} </span>
                         </li>
                         <li>
-                          <b>Sexe</b> <span>{this.state.Espece.sexe} </span>
+                          <b><FormattedMessage id="add_mouton_sexe"/></b> <span>{this.state.Espece.sexe} </span>
                         </li>
                         <li>
-                          <b>Age</b> <span>{this.state.Espece.age} mois</span>
+                        <FormattedMessage
+   id = "details_mouton_age"
+   values = {{age: this.state.Espece.age, b: (word)=> <b>{word}</b>,span: (word)=> <span>{word}</span>}}
+/>
                         </li>
                         <li>
-                          <b>Poids</b> <span>{this.state.Espece.poids} Kg</span>
+                        <FormattedMessage
+   id = "details_mouton_poids"
+   values = {{poids: this.state.Espece.poids, b: (word)=> <b>{word}</b>,span: (word)=> <span>{word}</span>}}
+/>
+                          {/* <b>Poids</b> <span>{this.state.Espece.poids} Kg</span> */}
                         </li>
                       </ul>
                     </div>
-                    <div className="price-stack-left container">
+                    <div style={localStorage.getItem('lg')=='ar'?{right:"66%"}:{}} className="price-stack-left container">
                       <div className="single-price-wrap">
                         <div className="white-block single-price">
                           <i className="fas fa-euro-sign"></i>
@@ -598,7 +610,7 @@ class DetailsMouton extends Component {
                               style={{ fontSize: "1rem", fontWeight: "900" }}
                             >
                               {this.state.Espece.prix}
-                              <span className="price-symbol"> DH</span>
+                              <span className="price-symbol"> <FormattedMessage id="panier_currency_abbreviation"/></span>
                             </div>
                           </div>
                         </div>
@@ -626,7 +638,7 @@ class DetailsMouton extends Component {
                               }}
                               className="primary-btn rounded     "
                             >
-                              <i className="fa fa-plus"></i> Commander l'espece
+                              <i className="fa fa-plus"></i> <FormattedMessage id="details_mouton_commander"/>
                             </button>
                           </Link>
                         </div>
@@ -646,8 +658,8 @@ class DetailsMouton extends Component {
                                 this.handlePanier(e.currentTarget.id)
                               }
                             >
-                              <i className="fa fa-shopping-cart"></i> Ajouter au
-                              panier
+                              <i className="fa fa-shopping-cart"></i> 
+                              <FormattedMessage id="favoris_ajoute_au_panier"/>
                             </button>{" "}
                           </Link>{" "}
                         </div>
@@ -669,7 +681,7 @@ class DetailsMouton extends Component {
                               }}
                               className="primary-btn rounded    "
                             >
-                              <i className="fa fa-plus"></i> Commander l'espece
+                              <i className="fa fa-plus"></i> <FormattedMessage id="details_mouton_commander"/>
                             </button>
                           </Link>
                         </div>
@@ -693,7 +705,7 @@ class DetailsMouton extends Component {
                             }}
                             className="primary-btn rounded    "
                           >
-                            <i className="fa fa-plus"></i> Commander l'espece
+                            <i className="fa fa-plus"></i> <FormattedMessage id="details_mouton_commander"/>
                           </button>
                         </Link>
                       </div>
@@ -733,8 +745,8 @@ class DetailsMouton extends Component {
                         {/*                                 <i className="fa fa-plus"></i>
                          */}{" "}
                         {!this.state.isFav
-                          ? "Ajouter aux favories"
-                          : "Supprimer de favoris"}
+                          ? <FormattedMessage id="details_mouton_ajouter_favoris"/>
+                          : <FormattedMessage id="details_mouton_supprimer_favoris"/>}
                       </button>
                     </div>
                   </div>
@@ -750,7 +762,7 @@ class DetailsMouton extends Component {
                   margin: "20px",
                 }}
               >
-                Annonces similaire
+                <FormattedMessage id="details_mouton_annonces_similaire"/>
               </div>
               <div>
                 <HomeCaroussel
