@@ -10,6 +10,9 @@ import { IoMdMale } from "react-icons/io";
 import { FaShapes } from "react-icons/fa";
 import { MdCake } from "react-icons/md";
 import Pagination from "react-js-pagination";
+import { FormattedMessage } from "react-intl";
+
+const intl=JSON.parse(localStorage.getItem('intl'));
 require("bootstrap-less/bootstrap/bootstrap.less");
 
 class Commandes extends Component {
@@ -215,12 +218,12 @@ class Commandes extends Component {
 
       swalWithBootstrapButtons
         .fire({
-          title: "Etes-vous sûr?",
-          text: "Voulez-vous supprimer cette annonce !",
+          title: intl.messages.panier_delete_item,
+          text: intl.messages.panier_delete_message,
           icon: "warning",
           showCancelButton: true,
-          confirmButtonText: "  Oui !  ",
-          cancelButtonText: "  Non !  ",
+          confirmButtonText: intl.messages.panier_delete_oui,
+          cancelButtonText: intl.messages.panier_delete_non,
           reverseButtons: true,
         })
         .then((result) => {
@@ -291,7 +294,7 @@ class Commandes extends Component {
                 this.props.history.push("/panier");
               });
             Swal.fire({
-              title: "Supprimé avec succès ",
+              title: intl.messages.panier_delete_succes,
               icon: "success",
               width: 400,
               heightAuto: false,
@@ -313,7 +316,7 @@ class Commandes extends Component {
             this.setState({ nombrePages: pageNumbers });
           } else if (result.dismiss === Swal.DismissReason.cancel) {
             Swal.fire({
-              title: "Annonce non supprimée ! ",
+              title: intl.messages.panier_delete_failed,
               icon: "error",
               width: 400,
               heightAuto: false,
@@ -343,13 +346,21 @@ class Commandes extends Component {
     if (fav.length === 1 || fav.length === 0) {
       titre = (
         <h6>
-          <span>{fav.length}</span> Commandes{" "}
+          <span>{fav.length}</span>  <FormattedMessage values={{ count: fav.length }} id="panier_nbr_annonces" />{" "}
         </h6>
       );
-    } else {
+    } 
+    else if (fav.length === 2) {
       titre = (
         <h6>
-          <span>{fav.length}</span> Commandes{" "}
+          <FormattedMessage values={{ count: fav.length }} id="panier_nbr_annonces" />{" "}
+        </h6>
+      );
+    }
+    else {
+      titre = (
+        <h6>
+          <span>{fav.length}</span>  <FormattedMessage values={{ count: fav.length }} id="panier_nbr_annonces" />{" "}
         </h6>
       );
     }
@@ -360,17 +371,17 @@ class Commandes extends Component {
            <div className="loader"></div>
         </div>  */}
 
-        <section className="">
+        <section style={localStorage.getItem("lg")=='ar'?{"direction":"rtl"}:{}} className="">
           <div className="container">
             <br></br>
-            <h3 className="latest-product__item">
-              Mon Panier <i className="fa fa-shopping-cart"></i>
+            <h3 style={localStorage.getItem("lg")=='ar'?{"textAlign":"justify"}:{}} className="latest-product__item">
+            <FormattedMessage id="panier_title" /> <i className="fa fa-shopping-cart"></i>
             </h3>
 
             <div className="row">
               <div className="col-lg-12 col-md-7">
                 {/*<!-- Sheeps Grid Section Begin --> */}
-                <div className="filter__found text-left">
+                <div style={localStorage.getItem("lg")=='ar'?{"textAlignLast":"right"}:{}} className="filter__found text-left">
                   <h6>
                     <span>{titre}</span>
                   </h6>
@@ -409,7 +420,7 @@ class Commandes extends Component {
                             </p>
 
                             <h3 style={{ color: "#28a745" }}>
-                              Liste de panier vide !
+                            <FormattedMessage id="panier_vide" />
                             </h3>
                           </div>
                         ) : (
@@ -421,8 +432,8 @@ class Commandes extends Component {
                             .map((p) => (
                               <div className="row  mb-2">
                                 <div className=" col-lg-12 col-md-12 col-sm-12 mt-3">
-                                  <b className="text-dark">Cooperative : </b>
-                                  <b className="text-primary">{p.nom}</b>
+                                  <b style={localStorage.getItem("lg")=='ar'?{float:"right"}:{}} className="text-dark"><FormattedMessage id="panier_cooperative" /> : </b>
+                                  <b style={localStorage.getItem("lg")=='ar'?{float:"right"}:{}} className="text-primary">{p.nom}</b>
                                   <Link
                                     to={{
                                       pathname: "/Commander",
@@ -436,14 +447,16 @@ class Commandes extends Component {
                                       <>
                                         {" "}
                                         <b
-                                          className="float-right"
-                                          style={{
-                                            color: "#fe6927",
-                                            fontWeight: "900",
-                                            fontSize: "18pt",
-                                          }}
+                                          style={localStorage.getItem("lg")=='ar'?{
+                                          float:"left",color: "#fe6927",
+                                          fontWeight: "900",
+                                          fontSize: "18pt",}
+                                          :{float:"right",
+                                          color: "#fe6927",
+                                          fontWeight: "900",
+                                          fontSize: "18pt",}}
                                         >
-                                          {p.prix} Dhs{" "}
+                                          {p.prix} <FormattedMessage id="panier_currency" />{" "}
                                           <button
                                             id={p.id_espaces}
                                             className=" rounded text-white bg-success py-1 px-2 ml-3  "
@@ -458,7 +471,7 @@ class Commandes extends Component {
                                             //  }
                                             // }
                                           >
-                                            {""} Commander tout
+                                            {""} <FormattedMessage id="panier_cmd_globale" />
                                           </button>
                                         </b>
                                       </>
@@ -523,7 +536,7 @@ class Commandes extends Component {
                                           className=" badge badge-success pt-2 w-100  "
                                         >
                                           <HiOutlineBadgeCheck className=" mr-1 fa-lg " />
-                                          <span>Labélisé ANOC</span>{" "}
+                                          <span><FormattedMessage id="panier_Labelise"/></span>{" "}
                                         </h1>
                                       ) : (
                                         <span className="badge pt-3 w-100 mb-2    ">
@@ -566,9 +579,9 @@ class Commandes extends Component {
                                               alt=""
                                             />
                                             {Annonces.espece == "chevre"
-                                              ? "Chèvre"
-                                              : "Mouton"}
-                                            <span className="float-right">
+                                              ? <FormattedMessage id="tout_les_annonces_chevre"/>
+                                              : <FormattedMessage id="tout_les_annonces_mouton"/>}
+                                            <span style={localStorage.getItem('lg')=="ar"?{ float: "left"}:{float:"right"}}>
                                               <FaShapes
                                                 style={{ marginRight: "5px" }}
                                               />
@@ -583,40 +596,44 @@ class Commandes extends Component {
                                               }}
                                             />
                                             {Annonces.sexe}
-                                            <span className="float-right ">
+                                            <span style={localStorage.getItem('lg')=="ar"?{ float: "left"}:{float:"right"}}>
                                               <GiWeight
                                                 className=" mr-1 fa-lg "
                                                 style={{ marginRight: "5px" }}
                                               />
-                                              {Annonces.poids + " Kg"}
+                                              <FormattedMessage id="panier_mouton_poids_kg"
+                                            values={{ poids:Annonces.poids }} />
                                             </span>
                                           </div>
                                           <div>
-                                            <span className="float-left ">
+                                            <span style={localStorage.getItem('lg')=="ar"?{ float: "right"}:{float:"left"}}>
                                               <MdCake
                                                 className=" mr-1 fa-lg "
                                                 style={{ marginRight: "5px" }}
                                               />
 
-                                              {Annonces.age + " mois"}
+                                            <FormattedMessage id="panier_mouton_age_mois"
+                                            values={{ age:Annonces.age }} />
                                             </span>
                                           </div>
                                           <div
-                                            className="float-right "
-                                            style={{
-                                              color: "#fe6927",
-                                              fontSize: "18px",
-                                              fontWeight: "1000",
-                                              textDecoration: "bold",
-                                              alignContent: "center",
-                                            }}
+                                            style={localStorage.getItem('lg')=="ar"?{ float: "left",color: "#fe6927",
+                                            fontSize: "18px",
+                                            fontWeight: "1000",
+                                            textDecoration: "bold",
+                                            alignContent: "center",}:{float:"right",color: "#fe6927",
+                                            fontSize: "18px",
+                                            fontWeight: "1000",
+                                            textDecoration: "bold",
+                                            alignContent: "center",}}
                                           >
                                             <img
                                               style={{ height: "30px" }}
                                               src={require("./Images/cash-payment.png")}
                                               alt=""
                                             />
-                                            {Annonces.prix + "  Dhs"}
+                                            <FormattedMessage id="panier_mouton_currency"
+                                            values={{ prix:Annonces.prix }} />
                                           </div>
                                           <br></br>
                                           {Annonces.statut === "disponible" ? (
@@ -646,7 +663,7 @@ class Commandes extends Component {
                                                   //  }
                                                   // }
                                                 >
-                                                  {""} Commander
+                                                  {""} <FormattedMessage id="panier_commander"/>
                                                 </button>
                                               </div>
                                             </Link>
