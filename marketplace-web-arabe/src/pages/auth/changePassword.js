@@ -3,6 +3,12 @@ import { login } from "./UserFunctions";
 import Swal from "sweetalert2";
 import axios from "axios";
 import Loader from "react-loader-spinner";
+import { FormattedMessage } from "react-intl";
+
+
+const intl = JSON.parse(localStorage.getItem("intl"));
+
+
 class changePassword extends Component {
   constructor() {
     super();
@@ -42,8 +48,8 @@ class changePassword extends Component {
           this.props.history.push("/ToutesLesAnnonces");
           this.setState({ loading: false });
           Swal.fire({
-            title: "Email de réinitailisation envoyé",
-            text: "Un lien vient de vous être envoyé par mail. Consulter votre boîte mail pour finaliser la réiniatisation de votre mot de passe.",
+            title: intl.messages.change_reinitialiser_title,
+            text: intl.messages.change_lien,
             icon: "success",
             width: 400,
             heightAuto: false,
@@ -61,7 +67,7 @@ class changePassword extends Component {
           ) {
             Swal.fire({
               /* title: "Erreur de connection",*/
-              text: "Lien de réinitailisation déja envoyé sur votre adresse mail. Vérifiez votre boîte mail!",
+              text: intl.messages.change_repete,
               icon: "info",
               width: 400,
               heightAuto: false,
@@ -75,7 +81,7 @@ class changePassword extends Component {
           ) {
             Swal.fire({
               /* title: "Erreur de connection",*/
-              text: "Vous n'avez de compte avec cette adresse",
+              text: intl.messages.change_email_erreur,
               icon: "error",
               width: 400,
               heightAuto: false,
@@ -85,8 +91,8 @@ class changePassword extends Component {
             });
           } else {
             Swal.fire({
-              title: "Oooops...",
-              text: "Erreur Serveur",
+              title: intl.messages.change_oups,
+              text: intl.messages.change_erreur,
               icon: "info",
               width: 400,
               heightAuto: false,
@@ -125,12 +131,12 @@ class changePassword extends Component {
                         {" "}
                         <br />{" "}
                         <h2 className="text-center">
-                          Réinitialiser Mot de Passe
+                          <FormattedMessage id="change_reinitialiser" />
                         </h2>
                       </center>
                       <br />
                       <br />{" "}
-                      <div className="row">
+                      <div className="row" style={localStorage.getItem("lg") == "ar"? { direction: "rtl", textAlign: "centre", width:"100%" }: {}}>
                         <div id="LoginIcon" className="col-lg-1 col-md-1">
                           <p></p>
                           <span className="symbol-input100">
@@ -141,13 +147,18 @@ class changePassword extends Component {
                           </span>{" "}
                         </div>
                         <div id="LoginIcon" className="col-lg-11 col-md-11">
+                        <FormattedMessage id="login_email">
+                        {(msg) => (
                           <input
                             type="text"
-                            placeholder="Email "
+                            placeholder={msg}
                             aria-hidden="true"
                             name="email"
                             onChange={this.onChange}
                           />
+
+                        )}
+                      </FormattedMessage>
                         </div>
                       </div>
                       <p></p>
@@ -174,7 +185,8 @@ class changePassword extends Component {
                         </div>
                       ) : (
                         <button type="submit" className="site-btn">
-                          Valider
+                                        <FormattedMessage id="change_valider" />
+
                         </button>
                       )}
                       <p></p>
