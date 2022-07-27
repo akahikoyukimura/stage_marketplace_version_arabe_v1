@@ -9,6 +9,12 @@ import { HiOutlineBadgeCheck } from "react-icons/hi";
 import { FaShapes } from "react-icons/fa";
 import ReactDOM from "react-dom"; */
 import Modal from "react-modal";
+
+import { FormattedMessage } from "react-intl";
+
+
+const intl = JSON.parse(localStorage.getItem("intl"));
+
 const customStyles = {
   content: {
     top: "50%",
@@ -123,7 +129,7 @@ class Compte extends Component {
             <button>the modal</button>
           </form>
         </Modal>
-        <div className="container">
+        <div className="container" style={localStorage.getItem("lg") == "ar"? { direction: "rtl", textAlign: "centre", width:"100%" }: {}}>
           {this.state.Data.length != 0 ? (
             <>
               <div className="cont">
@@ -153,37 +159,37 @@ class Compte extends Component {
                       )}
                     </centre>{" "}
                   </div>
-                  <div className="information item">
+                  <div className="information item" style={localStorage.getItem("lg") == "ar"? { direction: "rtl", textAlign: "right", width:"100%" }: {}}>
                     <div className="details">
                       <ul className="pt-4">
                         <li>
-                          <b>Civilisation</b>{" "}
+                          <b><FormattedMessage  id="compte_civilisation"/></b>{" "}
                           <span>{this.state.Data.civilisation}</span>{" "}
                         </li>
                         <li>
-                          <b>Nom</b> <span>{this.state.Data.nom}</span>{" "}
+                          <b><FormattedMessage  id="signup_nom"/></b> <span>{this.state.Data.nom}</span>{" "}
                         </li>
                         {/*<li>
                           <b>Categorie</b> <span>{this.state.Espece.categorie}</span>
                         </li>*/}
                         <li>
-                          <b>Prénom</b> <span>{this.state.Data.prenom}</span>{" "}
+                          <b><FormattedMessage  id="signup_prenom"/></b> <span>{this.state.Data.prenom}</span>{" "}
                         </li>
                         <li>
-                          <b>Télephone</b> <span>{this.state.Data.tel} </span>{" "}
+                          <b><FormattedMessage  id="compte_tel"/></b> <span>{this.state.Data.tel} </span>{" "}
                         </li>
                         <li>
-                          <b>Email</b> <span>{this.state.Data.email} </span>{" "}
+                          <b><FormattedMessage  id="signup_email"/></b> <span>{this.state.Data.email} </span>{" "}
                           {/* <button onClick={this.openModal}>
                             {" "}
                             <img src="/Images/edit.png" alt="item" />
                           </button> */}
                         </li>
                         <li>
-                          <b>Adresse</b> <span>{this.state.Data.adresse} </span>{" "}
+                          <b><FormattedMessage  id="signup_adresse"/></b> <span>{this.state.Data.adresse} </span>{" "}
                         </li>
                         <li>
-                          <b>Ville</b> <span>{this.state.Data.ville} </span>{" "}
+                          <b><FormattedMessage  id="signup_ville"/></b> <span>{this.state.Data.ville} </span>{" "}
                         </li>
                       </ul>
                     </div>
