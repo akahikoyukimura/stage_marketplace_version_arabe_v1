@@ -80,6 +80,7 @@
     "panier_vide":"Liste de panier vide !",
     "panier_cooperative":"Cooperative",
     "panier_currency":"Dhs",
+    "panier_currency_abbreviation":"DH",
     "panier_cmd_globale":"Commande globale",
     "panier_commander":"Commander",
     "panier_Labelise":" Labélisé ANOC",
@@ -193,6 +194,9 @@
     "details_mouton_aucune_description":"Aucune description disponible",
     "details_mouton_commander":"Commander l'espece",
     "details_mouton_espece":"Espece",
+    "details_mouton_ajouter_favoris":"Ajouter aux favories",
+    "details_mouton_supprimer_favoris":"Supprimer de favoris",
+    "details_mouton_annonces_similaire":"Annonces similaire",
 
     "_comment21":"this is ach_commander page",
     "commander_title":"Commander votre bête",

@@ -79,6 +79,7 @@
     "panier_vide":"قائمة سلة التسوق فارغة!",
     "panier_cooperative":"تعاونية",
     "panier_currency":"درهم",
+    "panier_currency_abbreviation":"د",
     "panier_cmd_globale":"الطلبية العامة",
     "panier_commander":"طلب",
     "panier_Labelise":" علامة ANOC ",
@@ -192,6 +193,9 @@
     "details_mouton_aucune_description":"لا يوجد وصف متاح",
     "details_mouton_commander":"طلب النوع",
     "details_mouton_espece":"النوع",
+    "details_mouton_ajouter_favoris":"اضافة الى قائمة الاشياء المفضلة",
+    "details_mouton_supprimer_favoris":"إزالة من قائمة الاشياء المفضلة",
+    "details_mouton_annonces_similaire":"إعلانات مشابهة",
 
     "_comment21":"this is ach_commander page",
     "commander_title":"اطلب حيوانك",

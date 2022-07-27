@@ -1417,8 +1417,8 @@ class HomeSheeps extends Component {
                                             alt=""
                                           />
                                           {Annonces.espece == "chevre"
-                                            ? <FormattedMessage id="tout_les_annonces_mouton"/>
-                                            : <FormattedMessage id="tout_les_annonces_chevre"/>}
+                                            ? <FormattedMessage id="tout_les_annonces_chevre"/>
+                                            : <FormattedMessage id="tout_les_annonces_mouton"/>}
                                           <span style={localStorage.getItem('lg')=="ar"?{ float: "left"}:{float:"right"}} >
                                             <FaShapes
                                               style={{ marginRight: "5px" }}
